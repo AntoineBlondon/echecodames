@@ -1,7 +1,8 @@
+#Class 2 file
 from copy import deepcopy
+from colorama import Fore, Back
 from functions import *
-from colorama import Fore, Back, Style
-from time import sleep
+
 
 tabVide = [[0,1,0,1,0,1,0,1],
            [1,0,1,0,1,0,1,0],
