@@ -116,9 +116,10 @@ def getCoordinatesFromInput(message):
     coords = input(message)
     
     (xs,ys) = "", ""
-    while not coords[1] == ',' or len(coords) != 3:
+    while not coords[1] == ',' or len(coords) != 3 or not coords.split(",")[0] in "0123456789" or not coords.split(",")[1] in "0123456789":
         print("Erreur de syntaxe")
         coords = input(message)
+
     (xs,ys) = coords.split(',')
     return int(xs), int(ys)
 
