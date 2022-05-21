@@ -86,8 +86,7 @@ def getAbsolutePionAt(x,y,plateau):
 
         Si la case est 2, renvoie 2
     """
-    if isEmptyAt(x,y,plateau):
-        return plateau[y][x]
+    if isEmptyAt(x,y,plateau): return plateau[y][x]
     return plateau[y][x][0]
 
 
@@ -114,11 +113,13 @@ def getCoordinatesFromInput(message):
     Returns:
         tuple: Le tuple de coordonnées renseigné par l'utilisateur
     """
-    a = input(message)
+    coords = input(message)
     
     (xs,ys) = "", ""
-    if ',' in a:
-        (xs,ys) = a.split(',')
+    while not coords[1] == ',' or len(coords) != 3:
+        print("Erreur de syntaxe")
+        coords = input(message)
+    (xs,ys) = coords.split(',')
     return int(xs), int(ys)
 
 def isSelected(x,y,plateau):
