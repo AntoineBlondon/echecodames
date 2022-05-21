@@ -7,15 +7,15 @@ Un jeu de plateau mélangeant les échecs et les dames codé en python
 
 Affichage textuel :
 
-  0 1 2 3 4 5 6 7 
-0 ░░z ░░r ░░r ░░f 
-1 p ░░p ░░p ░░p ░░
-2 ░░p ░░p ░░p ░░p 
-3   ░░  ░░  ░░  ░░
-4 ░░  ░░  ░░  ░░  
-5 p ░░p ░░p ░░p ░░
-6 ░░p ░░p ░░p ░░p
-7 f ░░r ░░r ░░z ░░
+  0 1 2 3 4 5 6 7 \n
+0 ░░z ░░r ░░r ░░f \n
+1 p ░░p ░░p ░░p ░░\n
+2 ░░p ░░p ░░p ░░p \n
+3   ░░  ░░  ░░  ░░\n
+4 ░░  ░░  ░░  ░░  \n
+5 p ░░p ░░p ░░p ░░\n
+6 ░░p ░░p ░░p ░░p \n
+7 f ░░r ░░r ░░z ░░\n
 Situation de départ
 
 
