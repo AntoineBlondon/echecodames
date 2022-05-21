@@ -13,4 +13,4 @@ Affichage textuel colorée dans le terminal
 
 Créé pour un projet scolaire
 
-Par Antoine Blondon, Kylian Chapon et Adam Jacquemond
+Par Adam Jacquemond, Kylian Chapon et Antoine Blondon
