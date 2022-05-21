@@ -5,9 +5,10 @@ Un jeu de plateau mélangeant les échecs et les dames codé en python
 (exemple: voir https://fr.wikipedia.org/wiki/Cheskers)
 
 
-Affichage textuel :
-s
-  0 1 2 3 4 5 6 7 
+Affichage textuel
+
+
+░░0 1 2 3 4 5 6 7 
 0 ░░z ░░r ░░r ░░f 
 1 p ░░p ░░p ░░p ░░
 2 ░░p ░░p ░░p ░░p 
@@ -16,6 +17,7 @@ s
 5 p ░░p ░░p ░░p ░░
 6 ░░p ░░p ░░p ░░p 
 7 f ░░r ░░r ░░z ░░
+
 Situation de départ
 
 
