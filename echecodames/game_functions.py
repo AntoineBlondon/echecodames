@@ -67,7 +67,7 @@ def start():
     """Commence la partie
     """
 
-    plateau = deepcopy(tabTest)
+    plateau = deepcopy(tabDepart)
 
 
 
