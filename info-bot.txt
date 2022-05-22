@@ -27,3 +27,20 @@ Le fou à une liberté de mouvement non-négligeable, avec la plupart des pions 
 Le zèbre garde les mêmes contraintes dans ses mouvements et devient très privisible à cause de l'amélioration de la visibilité du joueur due au manque de pions sur le plateau
 
 
+
+
+
+Stratégie qui semble idéale (défence): 
+- Se protéger du zèbre ennemi
+- Garder bloqué le fou tout en créant une faille chez l'ennemi
+- Manger le fou ennemi avec le zèbre, puis manger les ris
+
+
+Stratégie qui semble idéale (offense): 
+- Sortir le zèbre et le placer sur la case parfaite
+- Manger un roi ennemi
+- Protéger la case parfaite du zèbre
+- Replacer le zèbre sur la case parfaite
+- Manger second roi ennemi
+
+
