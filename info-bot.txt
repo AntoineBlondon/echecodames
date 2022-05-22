@@ -1,0 +1,29 @@
+Informations sur le gameplay pour créer un bot fort au jeu
+
+
+
+
+Début de partie:
+
+Zèbre > Fou
+
+Le zèbre à la possibilité de manger directement un roi en 3 coups
+Le fou est bloqué dans ses mouvements par 2 pions dès le début
+
+
+Pour éviter de se faire manger un roi en 3 coups, il faut:
+
+- Décaler ses deux rois
+ou
+- Déplacer un pion de sorte que si le zèbre ennemi se place correctement, il est possible de le manger
+
+
+
+Fin de partie:
+
+Fou > Zèbre
+
+Le fou à une liberté de mouvement non-négligeable, avec la plupart des pions en moins, il est inarretable
+Le zèbre garde les mêmes contraintes dans ses mouvements et devient très privisible à cause de l'amélioration de la visibilité du joueur due au manque de pions sur le plateau
+
+
