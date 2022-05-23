@@ -59,10 +59,10 @@ def show(plateau):
     """
 
 
-    stringToPrint = """  0 1 2 3 4 5 6 7 \n"""
+    stringToPrint = """  a b c d e f g h \n"""
 
     for y, ligne in enumerate(plateau):
-        stringToPrint += f"{str(y)} "
+        stringToPrint += f"{str(y+1)} "
         for x, case in enumerate(ligne):
             stringToPrint += getStringCase(x,y,plateau)
         stringToPrint += "\n"

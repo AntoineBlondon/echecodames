@@ -115,13 +115,8 @@ def getCoordinatesFromInput(message):
     """
     coords = input(message)
     
-    (xs,ys) = "", ""
-    while len(coords) != 3 or not coords[1] == ',' or not coords.split(",")[0] in "0123456789" or not coords.split(",")[1] in "0123456789":
-        print("Erreur de syntaxe")
-        coords = input(message)
-
-    (xs,ys) = coords.split(',')
-    return int(xs), int(ys)
+    return translate(coords)
+    
 
 def isSelected(x,y,plateau):
     """Renvoie True si la case (x,y) de plateau est selectionnée par un joueur
@@ -151,3 +146,9 @@ def sontDeMemeCouleur(x1,y1,x2,y2,plateau):
         bool: Les deux cases sont de la même couleur
     """
     return est_blanche(x1,y1,plateau) == est_blanche(x2,y2,plateau)
+
+
+def translate(string):
+    x=ord(string[0].upper()) - 65
+    y=int(string[1])-1
+    return x,y
