@@ -12,7 +12,42 @@ def isEnded(plateau):
         plateau (matrice): Le plateau
 
     Returns:
-        bool: Il reste encore un roi en jeu
+        bool: La partie est terminée
+    """
+
+    
+    
+    return unJoueurSansRoi(plateau) or unJoueurSansOptions(plateau)
+
+def unJoueurSansOptions(plateau):
+    """Renvoie True si un joueur ne peut plus se déplacer
+
+    Args:
+        plateau (matrice): Le plateau de jeu
+    
+    Returns:
+        bool: Un joueur n'a plus d'option
+    """
+    opt1 = True
+    opt2 = True
+    for y, ligne in enumerate(plateau):
+        for x, case in enumerate(ligne):
+            if not isEmptyAt(x,y,plateau):
+                if len(casesDispo(x,y,plateau)) > 0:
+                    if est_blanche(x,y,plateau):
+                        opt1 = False
+                    else:
+                        opt2 = False
+    return opt1 or opt2
+
+def unJoueurSansRoi(plateau):
+    """Renvoie True si un joueur n'a plus de roi
+
+    Args:
+        plateau (matrice): Le plateau
+
+    Returns:
+        bool: Un joueur ne possède plus de roi
     """
 
     roi1 = True
@@ -36,14 +71,25 @@ def whoWon(plateau):
     Returns:
         bool: Le joueur gagnant (True pour blanc et False pour noir)
     """
-    roi2 = True
-    for y, ligne in enumerate(plateau):
-        for x, case in enumerate(ligne):
-            if getAbsolutePionAt(x,y,plateau) == "r":
-                if not est_blanche(x,y,plateau):
-                    roi2 = False
-    
-    return roi2
+    if unJoueurSansRoi(plateau):
+        roi2 = True
+        for y, ligne in enumerate(plateau):
+            for x, case in enumerate(ligne):
+                if getAbsolutePionAt(x,y,plateau) == "r":
+                    if not est_blanche(x,y,plateau):
+                        roi2 = False
+        
+        return roi2
+    else:
+        opt2 = True
+        for y, ligne in enumerate(plateau):
+            for x, case in enumerate(ligne):
+                if not isEmptyAt(x,y,plateau):
+                    if len(casesDispo(x,y,plateau)) > 0:
+                        if not est_blanche(x,y,plateau):
+                            opt2 = False
+        return opt2
+
 
 
 
