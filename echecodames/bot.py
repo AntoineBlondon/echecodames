@@ -51,8 +51,8 @@ def pointDuPlateau(plateau):
 
             if getAbsolutePionAt(x,y,plateau) == "r":
                 if est_blanche(x,y,plateau) == False:
-                    pointsDuPlateau += 6
-                else: pointsDuPlateau -= 6
+                    pointsDuPlateau += 7
+                else: pointsDuPlateau -= 7
             
             if not isEmptyAt(x,y,plateau):
                 if len(statsAttaque(x,y,plateau)) > 0:
@@ -75,12 +75,7 @@ def pointDuPlateau(plateau):
                             else: pointsDuPlateau+=2
                     
                     if getAbsolutePionAt(x,y,plateau) == 'z':
-                        pion = False
-                            
-                        for i in statsAttaque(x,y,plateau):
-                            if i[0] in ['p','f']: pion == True
-                        
-                        if pion or len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)):
+                        if len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)):
                             if est_blanche(x,y,plateau) == False:
                                 pointsDuPlateau-=3
                             else: pointsDuPlateau+=3
@@ -91,7 +86,9 @@ def pointDuPlateau(plateau):
                             for xd,uneCase in enumerate(lig):
                                 if getAbsolutePionAt(xd,yd,plateau) =='r' and not uneCase[2]: roi += 1
                         
-                        
+                        if len(casesDispo(x,y,plateau)) == 0:
+                            pointsDuPlateau-=2
+
                         if not est_blanche(x,y,plateau):
                             if roi>1:
                                 pointsDuPlateau-=5
@@ -229,7 +226,7 @@ def jouer(plateau, couleur):
                 mange = True
             
             while not mange:
-                xa,ya = casesPionQuiMange(xs,ys,plateau)[randint(0,len(casesPionQuiMange(xs,ys,plateau)))]
+                xa,ya = casesPionQuiMange(xs,ys,plateau)[randint(0,len(casesPionQuiMange(xs,ys,plateau))-1)]
                 if getAbsolutePionAt(xs,ys,plateau) in ["p", "r"]:
                     if (xa,ya) in casesDispo(xs,ys,plateau):
                         if canMangerSansDeplacer(xs,ys,xa,ya,plateau):

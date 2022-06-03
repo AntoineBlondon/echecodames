@@ -266,6 +266,9 @@ def startBot(test=False):
 
 
         unSelect(plateau)
+        if isEnded(plateau):
+            break
+        
         if test:
             for i in plateauxPossibles(plateau, False):
                 show(i)
