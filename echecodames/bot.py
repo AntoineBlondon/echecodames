@@ -184,14 +184,16 @@ def jouer(plateau, couleur):
         couleur (bool): La couleur du bot
     """
     mange = False
-    xs,ys = getBestMove(plateau, couleur)[0]
+    bestmove = getBestMove(plateau, couleur)
+    xs,ys =bestmove[0]
     select(xs,ys,plateau)
     show(plateau)
+    sleep(1)
 
     hasmange = False
 
     while not mange:
-        xa,ya = getBestMove(plateau, couleur)[1]
+        xa,ya = bestmove[1]
         
 
         if getAbsolutePionAt(xs,ys,plateau) == "p":
@@ -220,7 +222,7 @@ def jouer(plateau, couleur):
             unSelect(plateau)
             selectPionQuiMange(xs,ys,plateau)
             show(plateau)
-            sleep(0.5)
+            sleep(1)
             mange = False
             
             if casesPionQuiMange(xs,ys,plateau) == []:
@@ -236,15 +238,12 @@ def jouer(plateau, couleur):
                                 mange = True
                             else:
                                 xs,ys = xa,ya
-                        
-                unSelect(plateau)
-                selectPionQuiMange(xs,ys,plateau)
-                show(plateau)
         unSelect(plateau)
         select(xs,ys,plateau)
         show(plateau)
+        unSelect(plateau)
 
-        atteintDerniereLigne(xa, ya, plateau)
+        atteintDerniereLigneBot(xa, ya, plateau)
     
 
 def ca_depend(peutetre, oupas):

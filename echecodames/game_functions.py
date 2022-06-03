@@ -160,7 +160,7 @@ def start():
 
 
 
-def startBot():
+def startBot(test=False):
     """Commence la partie contre le bot
     """
 
@@ -266,9 +266,10 @@ def startBot():
 
 
         unSelect(plateau)
-        for i in plateauxPossibles(plateau, False):
-            show(i)
-            print(pointDuPlateau(i))
+        if test:
+            for i in plateauxPossibles(plateau, False):
+                show(i)
+                print(pointDuPlateau(i))
         jouer(plateau, False)
 
         

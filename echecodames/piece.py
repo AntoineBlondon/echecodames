@@ -235,6 +235,24 @@ def atteintDerniereLigne(x, y, plateau):
             if choix_nouveau_pion == "fou":
                 newPlateau[y][x][0]="f"
     plateau = newPlateau
+
+def atteintDerniereLigneBot(x, y, plateau):
+    """Change le pion (x,y) s'il a atteint la ligne de font pour le bot
+
+    Args:
+        x (int): Coordonnée x du pion
+        y (int): Coordonnée y du pion
+        plateau (int): Le plateau
+    """
+    newPlateau = plateau
+    if getAbsolutePionAt(x, y, plateau)=="p": #si c'est un pion
+        couleur = est_blanche(x, y, plateau)
+        if couleur == True and y == 0: # Si le pion est blanc et qu'il est sur la ligne du haut
+            newPlateau[y][x][0]="r"
+            
+        if couleur == False and y == 7: # Si le pion est noir
+            newPlateau[y][x][0]="r"
+    plateau = newPlateau
     
 
 def getAllPions(plateau, couleur):
