@@ -236,3 +236,232 @@ def atteintDerniereLigne(x, y, plateau):
                 newPlateau[y][x][0]="f"
     plateau = newPlateau
     
+
+def getAllPions(plateau, couleur):
+    """Renvoie la liste des coordonnées de tous les pions de couleur couleur
+    
+    Args:
+        plateau (matrice): Le plateau de départ
+        couleur (bool): La couleur du bot (True => Blanc, False => Noir)
+    
+    Returns:
+        list: La liste des coordonnées
+    """
+    liste = []
+
+    for y, ligne in enumerate(plateau):
+        for x, colonne in enumerate(ligne):
+            if not isEmptyAt(x,y,plateau) and est_blanche(x,y,plateau) == couleur:
+                liste.append((x,y))
+    return liste
+
+def getAllDeplacements(plateau, couleur):
+    """Renvoie la liste des tuples des coordonnées de tous les pions ainsi que leurs déplacements possibles
+    
+    Args:
+        plateau (matrice): Le plateau de départ
+        couleur (bool): La couleur du bot (True => Blanc, False => Noir)
+    
+    Returns:
+        list: La liste des coordonnées
+    """
+
+    liste = []
+
+
+    for (x,y) in getAllPions(plateau, couleur):
+        for (xa,ya) in casesDispo(x,y,plateau):
+            liste.append(((x,y),(xa,ya)))
+        
+    return liste
+
+def statsAttaque(x,y,plateau):
+    """Renvoie la liste de tuple si le pion (x,y) de plateau est attaqué
+    
+    Args:
+        x (int): La coordonnée x de pion
+        y (int): La coordonnée y de pion
+        plateau (matrice): Le plateau
+    
+    Returns:
+        list: La liste de tuple correspondant au type de pion qui attaque ainsi que les coordonnées sur lesquels il sera après avoir mangé
+
+    Example:
+        [('f',(1,3)),('p',(5,2))]
+
+    """
+    liste=[]
+    
+    # Test Zèbre
+
+    for i in [(x+1,y+3),(x-1,y+3),(x+1,y-3),(x-1,y-3),(x+3,y+1),(x-3,y-1),(x+3,y-1),(x-3,y+1)]:
+        if est_valide(i[0],i[1],plateau) and not isEmptyAt(i[0],i[1],plateau) and not sontDeMemeCouleur(x,y,i[0],i[1],plateau) and getAbsolutePionAt(i[0],i[1], plateau) == 'z':
+            liste.append(('z',(x,y)))
+    
+    # Test Pion & Roi
+
+    listePion = [(x+1,y+1),(x-1,y+1),(x-1,y-1),(x+1,y-1)]
+
+    for index, i in enumerate(listePion):
+        if est_valide(i[0],i[1],plateau) and not isEmptyAt(i[0],i[1],plateau) and not sontDeMemeCouleur(x,y,i[0],i[1],plateau) and getAbsolutePionAt(i[0],i[1],plateau) in ['r','p'] and listePion[index-2] in SauteMoutonMortel(i[0],i[1],plateau):
+            liste.append((getAbsolutePionAt(i[0],i[1],plateau), listePion[index-2]))
+
+    
+    # Test Fou
+
+    diagos = [(1,1),(1,-1),(-1,1),(-1,-1)]
+
+    for i in diagos:
+        xs,ys = x,y
+        while True:
+            xs += i[0]
+            ys += i[1]
+
+            if not est_valide(xs,ys,plateau):
+                break
+
+            if not isEmptyAt(xs,ys,plateau):
+                if not sontDeMemeCouleur(x,y,xs,ys,plateau) and getAbsolutePionAt(xs,ys,plateau) == 'f':
+                    listePion.append(('f',(x,y)))
+                break
+
+    return liste
+
+            
+
+
+def statsDefense(x,y,plateau):
+    """Renvoie la liste de tuple lorsque le pion (x,y) de plateau est défendu
+    
+    Args:
+        x (int): La coordonnée x de pion
+        y (int): La coordonnée y de pion
+        plateau (matrice): Le plateau
+    
+    Returns:
+        list: La liste de tuple correspondant au type de pion qui défend ainsi que les coordonnées sur lesquels il sera après avoir défendu
+
+    Example:
+        [('f',(1,3)),('p',(5,2))]
+    """
+    liste=[]
+    
+    # Test Zèbre
+
+    for i in [(x+1,y+3),(x-1,y+3),(x+1,y-3),(x-1,y-3),(x+3,y+1),(x-3,y-1),(x+3,y-1),(x-3,y+1)]:
+        if est_valide(i[0],i[1],plateau) and not isEmptyAt(i[0],i[1],plateau) and sontDeMemeCouleur(x,y,i[0],i[1],plateau) and getAbsolutePionAt(i[0],i[1], plateau) == 'z':
+            liste.append(('z',(x,y)))
+    
+    # Test Pion & Roi
+
+    listePion = [(x+1,y+1),(x-1,y+1),(x-1,y-1),(x+1,y-1)]
+
+    for index, i in enumerate(listePion):
+        if est_valide(i[0],i[1],plateau) and not isEmptyAt(i[0],i[1],plateau) and sontDeMemeCouleur(x,y,i[0],i[1],plateau) and getAbsolutePionAt(i[0],i[1],plateau) in ['r','p']:
+            liste.append((getAbsolutePionAt(i[0],i[1],plateau), listePion[index-2]))
+
+    
+    # Test Fou
+
+    diagos = [(1,1),(1,-1),(-1,1),(-1,-1)]
+
+    for i in diagos:
+        xs,ys = x,y
+        while True:
+            xs += i[0]
+            ys += i[1]
+
+            if not est_valide(xs,ys,plateau):
+                break
+
+            if not isEmptyAt(xs,ys,plateau):
+                if sontDeMemeCouleur(x,y,xs,ys,plateau) and getAbsolutePionAt(xs,ys,plateau) == 'f':
+                    listePion.append(('f',(x,y)))
+                break
+
+    return liste
+
+def isEnded(plateau):
+    """Renvoie True si la partie est terminée
+
+    Args:
+        plateau (matrice): Le plateau
+
+    Returns:
+        bool: La partie est terminée
+    """
+
+    
+    
+    return unJoueurSansRoi(plateau) or unJoueurSansOptions(plateau)
+
+def unJoueurSansOptions(plateau):
+    """Renvoie True si un joueur ne peut plus se déplacer
+
+    Args:
+        plateau (matrice): Le plateau de jeu
+    
+    Returns:
+        bool: Un joueur n'a plus d'option
+    """
+    opt1 = True
+    opt2 = True
+    for y, ligne in enumerate(plateau):
+        for x, case in enumerate(ligne):
+            if not isEmptyAt(x,y,plateau):
+                if len(casesDispo(x,y,plateau)) > 0:
+                    if est_blanche(x,y,plateau):
+                        opt1 = False
+                    else:
+                        opt2 = False
+    return opt1 or opt2
+
+def unJoueurSansRoi(plateau):
+    """Renvoie True si un joueur n'a plus de roi
+
+    Args:
+        plateau (matrice): Le plateau
+
+    Returns:
+        bool: Un joueur ne possède plus de roi
+    """
+
+    roi1 = True
+    roi2 = True
+    for y, ligne in enumerate(plateau):
+        for x, case in enumerate(ligne):
+            if getAbsolutePionAt(x,y,plateau) == "r":
+                if est_blanche(x,y,plateau):
+                    roi1 = False
+                else:
+                    roi2 = False
+    
+    return roi1 or roi2
+
+def whoWon(plateau):
+    """Renvoie le gagnant de la partie
+
+    Args:
+        plateau (matrice): Le plateau
+
+    Returns:
+        bool: Le joueur gagnant (True pour blanc et False pour noir)
+    """
+    if unJoueurSansRoi(plateau):
+        roi2 = True
+        for y, ligne in enumerate(plateau):
+            for x, case in enumerate(ligne):
+                if getAbsolutePionAt(x,y,plateau) == "r":
+                    if not est_blanche(x,y,plateau):
+                        roi2 = False
+        
+        return roi2
+    else:
+        opt2 = True
+        for y, ligne in enumerate(plateau):
+            for x, case in enumerate(ligne):
+                if not isEmptyAt(x,y,plateau):
+                    if len(casesDispo(x,y,plateau)) > 0:
+                        if not est_blanche(x,y,plateau):
+                            opt2 = False
+        return opt2

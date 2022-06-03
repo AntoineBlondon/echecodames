@@ -2,7 +2,7 @@
 
 
 def SauteMoutonMortel(x,y,plateau):
-    """Renvoie la liste de coordonnées de plateau sur lesquelles le pion situé en (x,y) peut se déplacer
+    """Renvoie la liste de coordonnées de plateau sur lesquelles le pion situé en (x,y) peut se déplacer en mengeant
 
     Args:
         x (int): Coordonnée x du pion
@@ -10,7 +10,7 @@ def SauteMoutonMortel(x,y,plateau):
         plateau (matrice): Le plateau
 
     Returns:
-        list: La liste de tuples correspondant au coordonnées sur lesquelles le pion peut se déplacer
+        list: La liste de tuples correspondant au coordonnées sur lesquelles le pion peut se déplacer en mengeant
     """
     index=0
     casesDArrivee=[(x+2,y+2),(x-2,y+2),(x+2,y-2),(x-2,y-2)]
