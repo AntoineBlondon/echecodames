@@ -2,7 +2,7 @@
 
 Un jeu de plateau mélangeant les échecs et les dames codé en python
 
-(Exemple: voir https://fr.wikipedia.org/wiki/Cheskers)
+(Règles: voir https://fr.wikipedia.org/wiki/Cheskers)
 
 
 Affichage textuel colorée dans le terminal
