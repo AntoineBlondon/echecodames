@@ -19,7 +19,7 @@ lesPoints = {
 
 botRandom = [0,0,0,0,0,0,0,0,0,0,0]
 botFacile = [2,3,4,7   ,1,2,3,1,5    ,666,666666]
-botDifficile = [0,0,0,0    ,0,0,0,0,0    ,0,0]
+#botDifficile = [0,0,0,0    ,0,0,0,0,0    ,0,0], on bosse encore dessus c'est pour un avenir meileur
 
 
 def pointDuPlateau(plateau, bot, couleur):
@@ -62,13 +62,13 @@ def pointDuPlateau(plateau, bot, couleur):
                 
                         
 
-                if len(menaces(x,y,plateau)) > 0:
+                if len(statsAttaque(x,y,plateau)) > 0:
                     if getAbsolutePionAt(x,y,plateau)=="p":
 
-                        if len(menaces(x,y,plateau)) > len(statsDefense(x,y,plateau)):
+                        if len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)):
                             if est_blanche(x,y,plateau) == couleur:
                                 pointsDuPlateau-=bot[4]
-                            elif len(menaces(x,y,plateau)) > len(statsDefense(x,y,plateau)): 
+                            elif len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)): 
                                 pointsDuPlateau+=bot[4]
 
                     if getAbsolutePionAt(x,y,plateau) == 'f':
@@ -104,7 +104,7 @@ def pointDuPlateau(plateau, bot, couleur):
                                 pointsDuPlateau-=bot[8]
                             else:
                                 pointsDuPlateau-=bot[9]
-                        else:
+                        elif len(menaces(x,y,plateau)) > len(statsDefense(x,y,plateau)):
                             pointsDuPlateau+=bot[8]
             if isEnded(plateau):
                 if not whoWon(plateau):
@@ -122,7 +122,7 @@ def menaces(x,y,plateau):
     attaquant = []
 
     for attaqueur, (xa,ya) in statsAttaque(x,y,plateau):
-        if not statsAttaque(xa,ya,plateau) > 0:
+        if not len(statsAttaque(xa,ya,plateau)) > 0:
             attaquant.append((attaqueur, (xa,ya)))
     return attaquant
 
@@ -172,9 +172,9 @@ def getBestMove(plateau, bot, couleur):
     listeMoves = getAllDeplacements(plateau, couleur)
 
     while len(listePlateaux) > 1 and len(listeMoves) > 1:
-        p1 = pointDuPlateau(listePlateaux[0], bot)
+        p1 = pointDuPlateau(listePlateaux[0], bot, couleur)
 
-        p2 = pointDuPlateau(listePlateaux[1], bot)
+        p2 = pointDuPlateau(listePlateaux[1], bot, couleur)
 
         if p1 > p2:
             listePlateaux.pop(1)
