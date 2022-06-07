@@ -315,11 +315,3 @@ def commencer():
         elif difficulte == "facile":
             startBot(bot=botFacile)
         
-        startBot()
-        
-
-
-
-
-
-
