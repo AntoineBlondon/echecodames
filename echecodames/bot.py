@@ -1,7 +1,5 @@
 #Class 5 file
-from hashlib import new
 from random import *
-from turtle import pendown
 from piece import *
 from time import sleep
 
@@ -18,7 +16,9 @@ lesPoints = {
 "pionEnnemiZèbreAttaqué": 3,
 "pionEnnemiRoiAttaqué": 5}
 
-bestBot = [2,3,4,7   ,1,2,3,1,5    ,666,666666]
+
+botRandom = [0,0,0,0,0,0,0,0,0,0,0]
+botFacile = [2,3,4,7   ,1,2,3,1,5    ,666,666666]
 
 
 def pointDuPlateau(plateau, bot):
