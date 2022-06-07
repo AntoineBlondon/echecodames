@@ -300,7 +300,7 @@ def commencer():
     rep=""
 
     while not rep in ["multijoueur", "bot"]:    
-        rep = input("Voulez-vous jouer en multijoueur ou contre le bot ? \n > multijoueur\n > bot").lower()
+        rep = input("Voulez-vous jouer en multijoueur ou contre le bot ? \n > multijoueur\n > bot\n").lower()
     
     
     if rep == "multijoueur":
@@ -308,7 +308,7 @@ def commencer():
     elif rep == "bot":
         difficulte = ""
         while not difficulte in ["aléatoire", "facile"]:
-            difficulte = input("Choisissez la difficulté de votre adversaire virtuel, entre \n > aléatoire (donc très très difficile...de perdre)\n > facile (donc très très facile de gagner)").lower()
+            difficulte = input("\nChoisissez la difficulté de votre adversaire virtuel, entre \n > aléatoire (donc très très difficile...de perdre)\n > facile (donc très très facile de gagner)\n").lower()
         
         if difficulte == "aléatoire":
             startBot(bot=botRandom)

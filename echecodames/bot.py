@@ -19,14 +19,16 @@ lesPoints = {
 
 botRandom = [0,0,0,0,0,0,0,0,0,0,0]
 botFacile = [2,3,4,7   ,1,2,3,1,5    ,666,666666]
+botDifficile = [0,0,0,0    ,0,0,0,0,0    ,0,0]
 
 
-def pointDuPlateau(plateau, bot):
+def pointDuPlateau(plateau, bot, couleur):
     """Renvoie les points d'un plateau
     > On rentre un plateau, on compte les points totaux du plateau selon les pions, les attaques possibles et les défenses possibles 
     
     Args:
         plateau (matrice): Le plateau
+        bot (tableau): la difficulté du bot
     
     Returns:
         int: Le nombre de point attribué au plateau
@@ -36,33 +38,38 @@ def pointDuPlateau(plateau, bot):
     for y, ligne in enumerate(plateau):
         for x, case in enumerate(ligne):
             if getAbsolutePionAt(x,y,plateau) == "p":
-                if est_blanche(x,y,plateau) == False:
+                if est_blanche(x,y,plateau) == couleur:
                     pointsDuPlateau += bot[0]
                 else: pointsDuPlateau -= bot[0]
 
             if getAbsolutePionAt(x,y,plateau) == "f":
-                if est_blanche(x,y,plateau) == False:
+                if est_blanche(x,y,plateau) == couleur:
                     pointsDuPlateau += bot[1]
                 else: pointsDuPlateau -= bot[1]
 
             if getAbsolutePionAt(x,y,plateau) == "z":
-                if est_blanche(x,y,plateau) == False:
+                if est_blanche(x,y,plateau) == couleur:
                     pointsDuPlateau += bot[2]
                 else: pointsDuPlateau -= bot[2]
 
             if getAbsolutePionAt(x,y,plateau) == "r":
-                if est_blanche(x,y,plateau) == False:
+                if est_blanche(x,y,plateau) == couleur:
                     pointsDuPlateau += bot[3]
                 else: pointsDuPlateau -= bot[3]
             
             if not isEmptyAt(x,y,plateau):
-                if len(statsAttaque(x,y,plateau)) > 0:
+
+                
+                        
+
+                if len(menaces(x,y,plateau)) > 0:
                     if getAbsolutePionAt(x,y,plateau)=="p":
 
-                        if len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)):
-                            if est_blanche(x,y,plateau) == False:
+                        if len(menaces(x,y,plateau)) > len(statsDefense(x,y,plateau)):
+                            if est_blanche(x,y,plateau) == couleur:
                                 pointsDuPlateau-=bot[4]
-                            else: pointsDuPlateau+=bot[4]
+                            elif len(menaces(x,y,plateau)) > len(statsDefense(x,y,plateau)): 
+                                pointsDuPlateau+=bot[4]
 
                     if getAbsolutePionAt(x,y,plateau) == 'f':
                         pion = False
@@ -71,15 +78,17 @@ def pointDuPlateau(plateau, bot):
                             if i[0] == 'p': pion == True
                         
                         if pion or len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)):
-                            if est_blanche(x,y,plateau) == False:
+                            if est_blanche(x,y,plateau) == couleur:
                                 pointsDuPlateau-=bot[5]
-                            else: pointsDuPlateau+=bot[5]
+                            elif len(menaces(x,y,plateau)) > len(statsDefense(x,y,plateau)): 
+                                pointsDuPlateau+=bot[5]
                     
                     if getAbsolutePionAt(x,y,plateau) == 'z':
                         if len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)):
-                            if est_blanche(x,y,plateau) == False:
+                            if est_blanche(x,y,plateau) == couleur:
                                 pointsDuPlateau-=bot[6]
-                            else: pointsDuPlateau+=bot[6]
+                            elif len(menaces(x,y,plateau)) > len(statsDefense(x,y,plateau)):
+                                pointsDuPlateau+=bot[6]
                     
                     if getAbsolutePionAt(x,y,plateau) == 'r':
                         roi = 0
@@ -90,7 +99,7 @@ def pointDuPlateau(plateau, bot):
                         if len(casesDispo(x,y,plateau)) == 0:
                             pointsDuPlateau-=bot[7]
 
-                        if not est_blanche(x,y,plateau):
+                        if est_blanche(x,y,plateau) == couleur:
                             if roi>1:
                                 pointsDuPlateau-=bot[8]
                             else:
@@ -106,6 +115,16 @@ def pointDuPlateau(plateau, bot):
     return pointsDuPlateau
 
 
+def menaces(x,y,plateau):
+    """
+    verifie 
+    """
+    attaquant = []
+
+    for attaqueur, (xa,ya) in statsAttaque(x,y,plateau):
+        if not statsAttaque(xa,ya,plateau) > 0:
+            attaquant.append((attaqueur, (xa,ya)))
+    return attaquant
 
 
 
@@ -143,6 +162,7 @@ def getBestMove(plateau, bot, couleur):
 
     Args:
         plateau (matrice): Le plateau
+        bot (tableau): la difficulté du bot
         couleur (bool): La couleur du bot
     
     Returns:
@@ -179,6 +199,7 @@ def jouer(plateau, bot, couleur):
 
     Args:
         plateau (matrice): Le plateau
+        bot (tableau): la difficulté du bot
         couleur (bool): La couleur du bot
     """
     mange = False
@@ -242,7 +263,3 @@ def jouer(plateau, bot, couleur):
         unSelect(plateau)
 
         atteintDerniereLigneBot(xa, ya, plateau)
-    
-
-def ca_depend(peutetre, oupas):
-    return "ça dépend peut-être pas " +str(peutetre)+ "\nOu alors ça pourrait " +str(oupas)
