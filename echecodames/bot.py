@@ -18,9 +18,10 @@ lesPoints = {
 "pionEnnemiZèbreAttaqué": 3,
 "pionEnnemiRoiAttaqué": 5}
 
+bestBot = [2,3,4,7   ,1,2,3,1,5    ,666,666666]
 
 
-def pointDuPlateau(plateau):
+def pointDuPlateau(plateau, bot):
     """Renvoie les points d'un plateau
     > On rentre un plateau, on compte les points totaux du plateau selon les pions, les attaques possibles et les défenses possibles 
     
@@ -36,23 +37,23 @@ def pointDuPlateau(plateau):
         for x, case in enumerate(ligne):
             if getAbsolutePionAt(x,y,plateau) == "p":
                 if est_blanche(x,y,plateau) == False:
-                    pointsDuPlateau += 2
-                else: pointsDuPlateau -= 2
+                    pointsDuPlateau += bot[0]
+                else: pointsDuPlateau -= bot[0]
 
             if getAbsolutePionAt(x,y,plateau) == "f":
                 if est_blanche(x,y,plateau) == False:
-                    pointsDuPlateau += 3
-                else: pointsDuPlateau -= 3
+                    pointsDuPlateau += bot[1]
+                else: pointsDuPlateau -= bot[1]
 
             if getAbsolutePionAt(x,y,plateau) == "z":
                 if est_blanche(x,y,plateau) == False:
-                    pointsDuPlateau += 4
-                else: pointsDuPlateau -= 4
+                    pointsDuPlateau += bot[2]
+                else: pointsDuPlateau -= bot[2]
 
             if getAbsolutePionAt(x,y,plateau) == "r":
                 if est_blanche(x,y,plateau) == False:
-                    pointsDuPlateau += 7
-                else: pointsDuPlateau -= 7
+                    pointsDuPlateau += bot[3]
+                else: pointsDuPlateau -= bot[3]
             
             if not isEmptyAt(x,y,plateau):
                 if len(statsAttaque(x,y,plateau)) > 0:
@@ -60,8 +61,8 @@ def pointDuPlateau(plateau):
 
                         if len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)):
                             if est_blanche(x,y,plateau) == False:
-                                pointsDuPlateau-=1
-                            else: pointsDuPlateau+=1
+                                pointsDuPlateau-=bot[4]
+                            else: pointsDuPlateau+=bot[4]
 
                     if getAbsolutePionAt(x,y,plateau) == 'f':
                         pion = False
@@ -71,14 +72,14 @@ def pointDuPlateau(plateau):
                         
                         if pion or len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)):
                             if est_blanche(x,y,plateau) == False:
-                                pointsDuPlateau-=2
-                            else: pointsDuPlateau+=2
+                                pointsDuPlateau-=bot[5]
+                            else: pointsDuPlateau+=bot[5]
                     
                     if getAbsolutePionAt(x,y,plateau) == 'z':
                         if len(statsAttaque(x,y,plateau)) > len(statsDefense(x,y,plateau)):
                             if est_blanche(x,y,plateau) == False:
-                                pointsDuPlateau-=3
-                            else: pointsDuPlateau+=3
+                                pointsDuPlateau-=bot[6]
+                            else: pointsDuPlateau+=bot[6]
                     
                     if getAbsolutePionAt(x,y,plateau) == 'r':
                         roi = 0
@@ -87,20 +88,20 @@ def pointDuPlateau(plateau):
                                 if getAbsolutePionAt(xd,yd,plateau) =='r' and not uneCase[2]: roi += 1
                         
                         if len(casesDispo(x,y,plateau)) == 0:
-                            pointsDuPlateau-=2
+                            pointsDuPlateau-=bot[7]
 
                         if not est_blanche(x,y,plateau):
                             if roi>1:
-                                pointsDuPlateau-=5
+                                pointsDuPlateau-=bot[8]
                             else:
-                                pointsDuPlateau-=666
+                                pointsDuPlateau-=bot[9]
                         else:
-                            pointsDuPlateau+=5
+                            pointsDuPlateau+=bot[8]
             if isEnded(plateau):
                 if not whoWon(plateau):
-                    pointsDuPlateau += 666666
+                    pointsDuPlateau += bot[10]
                 else:
-                    pointsDuPlateau -= 666666
+                    pointsDuPlateau -= bot[10]
         
     return pointsDuPlateau
 
@@ -137,7 +138,7 @@ def plateauxPossibles(plateau, couleur):
 
 
 
-def getBestMove(plateau, couleur):
+def getBestMove(plateau, bot, couleur):
     """Renvoie le meilleur déplacement
 
     Args:
@@ -151,9 +152,9 @@ def getBestMove(plateau, couleur):
     listeMoves = getAllDeplacements(plateau, couleur)
 
     while len(listePlateaux) > 1 and len(listeMoves) > 1:
-        p1 = pointDuPlateau(listePlateaux[0])
+        p1 = pointDuPlateau(listePlateaux[0], bot)
 
-        p2 = pointDuPlateau(listePlateaux[1])
+        p2 = pointDuPlateau(listePlateaux[1], bot)
 
         if p1 > p2:
             listePlateaux.pop(1)
@@ -173,7 +174,7 @@ def getBestMove(plateau, couleur):
 
 
 
-def jouer(plateau, couleur):
+def jouer(plateau, bot, couleur):
     """Fait jouer le bot
 
     Args:
@@ -181,7 +182,7 @@ def jouer(plateau, couleur):
         couleur (bool): La couleur du bot
     """
     mange = False
-    bestmove = getBestMove(plateau, couleur)
+    bestmove = getBestMove(plateau, bot, couleur)
     xs,ys =bestmove[0]
     select(xs,ys,plateau)
     show(plateau)

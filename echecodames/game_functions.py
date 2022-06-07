@@ -160,7 +160,7 @@ def start():
 
 
 
-def startBot(test=False):
+def startBot(test=False,bot=bestBot):
     """Commence la partie contre le bot
     """
 
@@ -273,7 +273,7 @@ def startBot(test=False):
             for i in plateauxPossibles(plateau, False):
                 show(i)
                 print(pointDuPlateau(i))
-        jouer(plateau, False)
+        jouer(plateau, bot, False)
 
         
 
