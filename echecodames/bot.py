@@ -194,7 +194,7 @@ def getBestMove(plateau, bot, couleur):
 
 
 
-def jouer(plateau, bot, couleur):
+def jouer(plateau, bot, couleur, time):
     """Fait jouer le bot
 
     Args:
@@ -207,7 +207,7 @@ def jouer(plateau, bot, couleur):
     xs,ys =bestmove[0]
     select(xs,ys,plateau)
     show(plateau)
-    sleep(1)
+    sleep(time)
 
     hasmange = False
 
@@ -241,7 +241,7 @@ def jouer(plateau, bot, couleur):
             unSelect(plateau)
             selectPionQuiMange(xs,ys,plateau)
             show(plateau)
-            sleep(1)
+            sleep(time)
             mange = False
             
             if casesPionQuiMange(xs,ys,plateau) == []:

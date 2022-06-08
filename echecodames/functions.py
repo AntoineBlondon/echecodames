@@ -56,6 +56,8 @@ def est_blanche(x,y,plateau):
     Returns:
         bool: True si la case est blanche
     """
+    if isEmptyAt(x,y,plateau):
+        return plateau[y][x]
     return plateau[y][x][1]
 
 def getPionAt(x,y,plateau):

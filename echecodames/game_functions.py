@@ -273,7 +273,7 @@ def startBot(test=False,bot=botFacile):
             for i in plateauxPossibles(plateau, False):
                 show(i)
                 print(pointDuPlateau(i))
-        jouer(plateau, bot, False)
+        jouer(plateau, bot, False, 2)
 
         
 
@@ -315,3 +315,44 @@ def commencer():
         elif difficulte == "facile":
             startBot(bot=botFacile)
         
+
+def botFight(bot1,bot2):
+    """Commence la partie contre le bot
+    """
+
+    plateau = deepcopy(tabDepart)
+
+    while not isEnded(plateau):
+        jouer(plateau, bot1, True, 0)
+
+        unSelect(plateau)
+        if isEnded(plateau):
+            break
+
+        jouer(plateau, bot2, False, 0)
+
+    show(plateau)
+    gagnant = getColorString(whoWon(plateau))
+
+    print(f"Le joueur {gagnant} à gagné !")
+    return whoWon(plateau)
+
+
+def modBot(bot,num):
+    
+    boti = bot
+
+    for i in range(num):
+        botList = []
+        for a in range(5):
+            newBot = deepcopy(bot)
+            for index, c in enumerate(bot):
+                newBot[index] = c + randint(-1,1)
+            if botFight(newBot,botFacile):
+                botList.append(newBot)
+        if len(botList) > 0:
+            pass
+
+                
+        
+    return bot
